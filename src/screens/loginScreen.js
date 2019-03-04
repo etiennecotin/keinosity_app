@@ -14,7 +14,8 @@ export default class LoginScreen extends React.Component {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Login Screen</Text>
-                <LoginForm />
+                <LoginForm
+                    navigate={navigate}/>
             </View>
         );
     }
