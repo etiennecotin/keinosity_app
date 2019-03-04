@@ -23,7 +23,6 @@ export default class AuthLoadingScreen extends React.Component {
 
     refresh_token = (refreshToken) => new Promise((resolve, reject) => {
         setTimeout(() => {
-
             Api.post(`token/refresh`, {refresh_token: refreshToken})
                 .then(function (response) {
                     resolve(response.data);
