@@ -5,10 +5,11 @@ import {Field} from "redux-form";
 import RFTextView from '../../../TextInput';
 import styles from './styles';
 
+// variable to hold the references of the textfields
+// let inputs = {};
+// function to focus the field
 
-const focusNextField = (id) => {
-    this.inputs[id].focus();
-};
+const inputs = {};
 
 const HelloFormView = ({
    handleSubmit,
@@ -16,33 +17,34 @@ const HelloFormView = ({
    submitSucceeded,
    submitting,
    valid,
+    // inputs,
+   focusTheField,
 }) => (
     <View>
         <Field
             name="username"
             component={RFTextView}
             disabled={submitting}
-            blurOnSubmit={ false }
-            returnKeyType={ "next" }
-            onSubmitEditing={() => {
-                focusNextField('two');
-            }}
+            inputType={"email-address"}
             ref={ input => {
-                this.inputs['one'] = input;
+                inputs['one'] = input;
             }}
+            // focusNext={ (e) => { focusTheField(e); } }
+            lastInput={true}
         />
         <Field
             name="password"
             component={RFTextView}
             secure={true}
             disabled={submitting}
-            blurOnSubmit={ true }
-            returnKeyType={ "done" }
+            // returnKeyType={ "done" }
             ref={ input => {
-                this.inputs['two'] = input;
+                inputs['two'] = input;
             }}
+            // isFocused={focused}
+            lastInput={true}
         />
-        {!submitting && submitFailed && <Text style={styles.rootFailed}>Authentification failed</Text>}
+        {!submitting && submitFailed && <Text style={styles.rootFailed}>Authentication failed</Text>}
         {!submitting && submitSucceeded && <Text style={styles.rootSucceeded}>Submit Succeeded</Text>}
         <Button
             disabled={!valid || submitting}
@@ -62,6 +64,12 @@ HelloFormView.propTypes = {
 
 HelloFormView.defaultProps = {
     submitting: false,
+    // inputs: {},
+    focusTheField : function(id) {
+        console.log(id);
+        console.log(inputs[id]);
+        // inputs[id].focus();
+    },
 };
 
 export default HelloFormView;
