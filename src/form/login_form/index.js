@@ -53,7 +53,7 @@ class LoginForm extends Component {
             AsyncStorage.setItem('userToken', token);
             AsyncStorage.setItem('refreshToken', refreshToken);
 
-            this.props.navigation.navigate('App');
+            this.props.navigate('App');
         }
         throw new Error(); // TEST SUBMISSION ERROR
     };
