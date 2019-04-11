@@ -8,7 +8,12 @@ import ProfilScreen from "../screens/ProfilScreen";
 import Ionicons from "react-native-vector-icons/Feather";
 import LoginScreen from "../screens/loginScreen";
 import AuthLoadingScreen from "../screens/AuthLoadingScreen";
+import AddReportingScreen from "../screens/AddReportingScreen";
+import AddProjectScreen from "../screens/AddProjectScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+import LocationScreen from "../screens/LocationScreen";
 import {Image} from "react-native";
+import {EventIcon} from "../components/icons";
 
 const LoginNavigator = createStackNavigator(
     {
@@ -25,7 +30,10 @@ LoginNavigator.navigationOptions = {
 const HomeNavigator = createStackNavigator(
     {
         Home: HomeScreen,
-        Details: DetailsScreen
+        Details: DetailsScreen,
+        AddReporting: AddReportingScreen,
+        AddProject: AddProjectScreen,
+        Location: LocationScreen,
     },
     {
         initialRouteName: "Home",
@@ -45,6 +53,8 @@ HomeNavigator.navigationOptions = {
 const EventNavigator = createStackNavigator(
     {
         Home: EventScreen,
+        AddReporting: AddReportingScreen,
+        AddProject: AddProjectScreen,
     },
     {
         initialRouteName: "Home"
@@ -53,10 +63,8 @@ const EventNavigator = createStackNavigator(
 EventNavigator.navigationOptions = {
     tabBarLabel: 'Evenement',
     tabBarIcon: ({ focused }) => (
-        <Ionicons
-            name="bell"
-            size={25}
-            color={focused ? '#4d8fef' : 'grey'}
+        <EventIcon
+            stroke={focused ? '#4d8fef' : 'grey'}
         />
     ),
 };
@@ -64,6 +72,8 @@ EventNavigator.navigationOptions = {
 const ReportingNavigator = createStackNavigator(
     {
         Home: ReportingScreen,
+        AddReporting: AddReportingScreen,
+        AddProject: AddProjectScreen,
     },
     {
         initialRouteName: "Home"
@@ -83,9 +93,13 @@ ReportingNavigator.navigationOptions = {
 const ProfilNavigator = createStackNavigator(
     {
         Home: ProfilScreen,
+        Details: DetailsScreen,
+        AddReporting: AddReportingScreen,
+        AddProject: AddProjectScreen,
+        Settings: SettingsScreen,
     },
     {
-        initialRouteName: "Home"
+        initialRouteName: "Home",
     }
 );
 ProfilNavigator.navigationOptions = {
@@ -102,10 +116,18 @@ ProfilNavigator.navigationOptions = {
 const App = createBottomTabNavigator(
     {
         HomeApp: HomeNavigator,
-        Event: EventNavigator,
         Reporting: ReportingNavigator,
+        Event: EventNavigator,
         Profil: ProfilNavigator,
     },
+    {
+        tabBarOptions: {
+            style: {
+                height: 50,
+                zIndex: 200
+            },
+        }
+    }
 );
 const RootSwitch = createSwitchNavigator({
         AuthLoading: AuthLoadingScreen,
