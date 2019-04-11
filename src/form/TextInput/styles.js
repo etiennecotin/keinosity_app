@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     root: {
-        borderColor: 'gray',
+        borderColor: '#fff',
         borderWidth: 1,
         borderStyle: 'solid',
-        borderRadius: 25,
+        borderRadius: 2,
         width: '80%',
         marginTop: 10,
         marginBottom: 10,

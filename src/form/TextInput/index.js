@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { TextInput } from 'react-native';
 import styles from './styles';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/Feather";
 import { ThemeProvider, Input } from 'react-native-elements';
 import {Field} from "redux-form";
 
@@ -15,11 +15,13 @@ const RFTextInput = ({
      focusTheField,
      focusNext,
      lastInput,
+     iconName,
+     placeholder,
      input: { onBlur, onChange, onFocus, value },
      meta: { error, touched, valid }
 }) => (
     <Input
-        placeholder='Email'
+        placeholder={placeholder}
         errorStyle={{ color: 'red' }}
         onChangeText={onChange}
         value={value}
@@ -30,12 +32,14 @@ const RFTextInput = ({
         errorMessage={error && !valid ? error : null}
         inputContainerStyle={styles.root}
         secureTextEntry={secure}
+        inputStyle={{color: '#fff'}}
         leftIcon={
             <Icon
-                name='user'
+                name={iconName}
                 size={24}
-                color='black'/>
+                color='white'/>
         }
+        leftIconContainerStyle={{marginRight: 10}}
         // blurOnSubmit={ false }
         // returnKeyType={ lastInput ? "done" :"next" }
         // returnKeyLabel={ lastInput ? "done" :"next" }
