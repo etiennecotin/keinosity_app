@@ -1,6 +1,6 @@
 import { PropTypes } from 'prop-types';
 import React from 'react';
-import { Button, View, Text } from 'react-native';
+import {Button, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {Field} from "redux-form";
 import RFTextView from '../../../TextInput';
 import styles from './styles';
@@ -20,7 +20,7 @@ const HelloFormView = ({
     // inputs,
    focusTheField,
 }) => (
-    <View>
+    <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <Field
             name="username"
             component={RFTextView}
@@ -31,6 +31,8 @@ const HelloFormView = ({
             }}
             // focusNext={ (e) => { focusTheField(e); } }
             lastInput={true}
+            iconName={'user'}
+            placeholder={'Email'}
         />
         <Field
             name="password"
@@ -43,14 +45,20 @@ const HelloFormView = ({
             }}
             // isFocused={focused}
             lastInput={true}
+            iconName={'lock'}
+            placeholder={'Mot de passe'}
         />
-        {!submitting && submitFailed && <Text style={styles.rootFailed}>Authentication failed</Text>}
+        {!submitting && submitFailed && <Text style={styles.rootFailed}>L'email et le mot de passe ne correspondent pas</Text>}
         {!submitting && submitSucceeded && <Text style={styles.rootSucceeded}>Submit Succeeded</Text>}
-        <Button
-            disabled={!valid || submitting}
-            title="Submit Hello"
-            onPress={handleSubmit}
-        />
+
+        <View style={{width: '100%', marginTop: 20}}>
+            <TouchableOpacity
+                disabled={!valid || submitting}
+                onPress={handleSubmit}
+                style={styles.button}>
+                <Text style={styles.buttonText}>Connexion</Text>
+            </TouchableOpacity>
+        </View>
 
         {submitting && <Text style={styles.rootSucceeded}>Connexion</Text>}
     </View>
@@ -64,12 +72,6 @@ HelloFormView.propTypes = {
 
 HelloFormView.defaultProps = {
     submitting: false,
-    // inputs: {},
-    focusTheField : function(id) {
-        console.log(id);
-        console.log(inputs[id]);
-        // inputs[id].focus();
-    },
 };
 
 export default HelloFormView;

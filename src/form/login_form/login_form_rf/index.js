@@ -9,14 +9,14 @@ const afterSubmit = (result, dispatch) =>
 const validate = ({ username, password }) => {
     const errors = {};
     if (username === undefined) {
-        errors.username = 'Required';
+        errors.username = 'Obligatoire';
     } else if (username.trim() === '') {
-        errors.username = 'Must not be blank';
+        errors.username = 'Le champ ne doit pas être vide';
     }
     if (password === undefined) {
-        errors.password = 'Required';
+        errors.password = 'Obligatoire';
     } else if (password.trim() === '') {
-        errors.password = 'Must not be blank';
+        errors.password = 'Le champ ne doit pas être vide';
     }
     return errors;
 };

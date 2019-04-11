@@ -15,29 +15,7 @@ const wait = (values) => new Promise((resolve, reject) => {
             .catch(function (error) {
                 reject();
             });
-
-        // fetch("http://keinosity.etienne-cotin.fr/api/login_check",
-        //     {
-        //         method: "POST",
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(values)
-        //     })
-        //     .then(function(res){
-        //         resolve(res);
-        //         // return res.json();
-        //     })
-        //     .then(function(data){
-        //         reject();
-        //         // alert( JSON.stringify( data ) )
-        //     })
-
-        // console.log(response);
-        // console.log(response.data);
-
-    }, 3000);
+    }, 100);
 });
 
 class LoginForm extends Component {
