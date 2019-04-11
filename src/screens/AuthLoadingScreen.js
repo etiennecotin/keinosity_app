@@ -22,15 +22,17 @@ export default class AuthLoadingScreen extends React.Component {
     };
 
     refresh_token = (refreshToken) => new Promise((resolve, reject) => {
-        setTimeout(() => {
+        // setTimeout(() => {
             Api.post(`token/refresh`, {refresh_token: refreshToken})
                 .then(function (response) {
+                    console.log('ok');
                     resolve(response.data);
                 })
                 .catch(function (error) {
+                    console.log('ok', error);
                     return false;
                 });
-        }, 3000);
+        // }, 100);
     });
 
     // Fetch the token from storage then navigate to our appropriate place
@@ -39,6 +41,7 @@ export default class AuthLoadingScreen extends React.Component {
         try {
             userToken = await AsyncStorage.getItem('userToken');
             if (userToken !== null) {
+                console.log(`Bearer ${userToken}`);
                 const decoded = jwtDecode(userToken);
 
                 const isValid = this._checkTokenExpiration(decoded);
@@ -51,6 +54,7 @@ export default class AuthLoadingScreen extends React.Component {
                     if (refreshToken !== null) {
                         const response = await this.refresh_token(refreshToken);
                         if (response) {
+                            console.log(`Bearer ${userToken}`);
                             AsyncStorage.setItem('userToken', response.token);
                             AsyncStorage.setItem('refreshToken', response.refreshToken);
                             this.props.navigation.navigate('App');
