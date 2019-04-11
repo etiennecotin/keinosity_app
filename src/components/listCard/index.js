@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import Api from "../../config/Api";
-import { View, AsyncStorage} from "react-native";
+import { ScrollView, StyleSheet, View, AsyncStorage} from "react-native";
 import Card from "./card";
 
 const getList = (values) => new Promise((resolve, reject) => {
@@ -21,30 +21,30 @@ class ListCard extends Component {
     constructor(props) {
         super(props);
     }
-    handleSubmit = async (values) => {
-        // console.log(values);
-        let response = await getList(values);
-        if (response) {
-            const token = response.token;
-            const refreshToken = response.refresh_token;
-            AsyncStorage.setItem('userToken', token);
-            AsyncStorage.setItem('refreshToken', refreshToken);
-
-            this.props.navigation.navigate('App');
-        }
-        throw new Error(); // TEST SUBMISSION ERROR
-    };
 
     render() {
-        const names = ['Jake', 'Jon', 'Thruster'];
+        let data = this.props.dataList;
+        const navigate = this.props.navigate;
         return (
-            <View>
-                {names.map(function(name, index){
-                    return <Card key={index} />;
-                })}
-            </View>
+            data.map(function(data, index){
+                return <Card
+                    key={index}
+                    data={data}
+                    navigate={navigate}
+                />;
+            })
         );
     };
 }
+
+const styles = StyleSheet.create({
+    container: {
+        // flex:1,
+        // justifyContent: 'center',
+        // alignSelf: 'stretch',
+        // textAlign: 'center',
+        paddingVertical: 20,
+    }
+});
 
 export default ListCard;
