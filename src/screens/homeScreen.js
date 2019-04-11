@@ -1,20 +1,22 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import {ScrollView, StyleSheet, Text, View, Image, ActivityIndicator, StatusBar} from 'react-native';
 import ListCard from '../components/listCard';
 import {Button} from "react-native-elements";
 import Search from "../components/search";
+import Location from "../components/Location";
 import Api from "../config/Api";
+import MenuAdd from "../components/MenuAdd";
+import LogoTitle from "../components/logo"
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
-        title: 'Projets',
-        // headerStyle: {
-        //     // backgroundColor: "#03A9F4",
-        // },
-        // headerTintColor: "#fff",
+        // title: 'Projets',
+        headerTitle: <LogoTitle />,
+        headerTintColor: '#2E5CAE',
         headerTitleStyle: {
-            fontWeight: "bold"
+            fontWeight: "bold",
+            color: '#2E5CAE'
         },
         headerRight: <Search />,
         animationEnabled: true,
@@ -23,35 +25,58 @@ export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: {},
+            projects: [],
+            loaded: false,
         };
+    }
 
+    componentDidMount(): void {
         this.getListOfProjects();
     }
 
-     getListOfProjects = () => {
-
+    getListOfProjects = () => {
         Api.get('/projects')
             .then(function (response) {
-                console.log(response);
-            })
+                this.setState({projects: response.data});
+                console.log(response.data);
+                this.setState({loaded: true});
+            }.bind(this))
             .catch(function (error) {
-                console.log(error.response);
+                console.log(error);
             });
      };
 
     render() {
-        return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Home Screen</Text>
-                <Button
-                    title="Add some friends"
-                    onPress={() => this.props.navigation.navigate('Details')}
-                />
+        let isLoaded = this.state.loaded;
+        const { navigate } = this.props.navigation;
 
-                <ListCard />
-            </View>
-        );
+        if (isLoaded) {
+            return (
+                <React.Fragment >
+                    <MenuAdd/>
+                    <View contentContainerStyle={{ flex: 1}}>
+                        <ScrollView contentContainerStyle={{ padding: 18, }}>
+                            <Location navigation={this.props.navigation}/>
+                            <ListCard
+                                dataList={this.state.projects}
+                                navigate={navigate}
+                                {...this.props}
+                            />
+                        </ScrollView>
+                    </View>
+                </React.Fragment>
+            );
+        } else {
+            return (
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <MenuAdd/>
+                    <ActivityIndicator />
+                    <StatusBar barStyle="default" />
+                    <Text>Chargement</Text>
+                </View>
+            );
+        }
+
     }
 }
 
